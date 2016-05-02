@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Buddy</title>
+		<link href="//netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+		<script  type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+		
+		<script src="https://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-1.2.4.js"></script>
+	</head>
+	<body ng-app='buddyApp'>
+		<div>
+		Search: <input type="text" ng-model="search"/>
+		</div>
+		<div ng-controller="newBuddyCtrl">
+			<div ng-repeat="buddy in buddies|filter:search"  class='row' min>
+				<div class='col-sm-2'><span ng-click="bio(buddy)">{{buddy.userName}}</span></div>
+				<div class="col-sm-2"><span ng-click="bio(buddy)"> {{buddy.firstName}}</span></div>
+				<div class='col-sm-2'><span ng-click="bio(buddy)"> {{buddy.lastName}}</span></div>
+				<div class='col-sm-2'><span ng-click="bio(buddy)">{{buddy.status}}</span></div>
+				<div ng-if="buddy.status=='offline'">
+				<span class="glyphicon glyphicon-collapse-down" ng-click="offline()"></span></div>
+			</div>
+			<button ng-click="addBuddy()">add button</button>
+				
+					</div>
+		<script type="text/javascript">
+			var buddyApp = angular.module("buddyApp",['ui.bootstrap']);
+			//getting data from server//
+			
+			buddyApp.controller('newBuddyCtrl', function($scope, $uibModal, $log,$http){
+				$http.get('buddies.json').success(function(data){
+					$scope.buddies = data;
+
+				});
+				//last login time and date//
+				$scope.reverse = true;
+				$scope.offline=function(){
+					var d = new Date();
+					alert (d.toLocaleTimeString());
+				}
+				//extra data is retriving from the json ,onclick on the person name//
+				// container size//
+				$scope.bio=function(buddy){
+					$scope.bi = { email: buddy.email , dob: buddy.dob , bio: buddy.bio};
+					$scope.additionalDetails('lg');
+					
+				};
+
+				$scope.addBuddy = function () {
+					var createBuddy = $uibModal.open({
+						templateUrl : 'addingBuddy.html',
+						controller : 'newBuddyCtrl1', 
+						size : 'lg'
+					});
+
+					createBuddy.result.then(function(data) {
+						$scope.buddies.push(data);
+					}, function(xhr) {
+
+					})
+				}
+
+				$scope.add=function(){
+					$scope.buddies.push({
+						userName : $scope.userName,
+						firstName: $scope.firstName,
+						lastName : $scope.lastName,
+						status : 'Online',
+						email : $scope.email,
+						dob : $scope.dob,
+						bio : $scope.bio
+					});
+				
+					
+				}
+
+				//information regarding the above line//
+				$scope.additionalDetails = function(size){
+					var buddyInstance = $uibModal.open({
+						templateUrl: 'indexCtrl.html',
+						controller: 'buddyInstanceCtrl',
+						size: size,
+						resolve:{
+							bi: function(){
+								return $scope.bi;
+							}
+						}
+					});
+					buddyInstance.result.then(function(){
+						
+					}, function () {
+				    	$log.info('Modal dismissed at: ' + new Date());
+				    });
+				};
+			
+		
+				});
+			buddyApp.controller('buddyInstanceCtrl',function($scope,$uibModalInstance,bi){
+				$scope.bud = bi;
+				
+			});
+			buddyApp.controller('newBuddyCtrl1', function($scope,$uibModalInstance, $log,$http){
+				$scope.add =function() {
+
+
+					$uibModalInstance.close({
+						userName : $scope.userName,
+						firstName: $scope.firstName,
+						lastName : $scope.lastName,
+						status : 'Online',
+						email : $scope.email,
+						dob : $scope.dob,
+						bio : $scope.bio
+					});
+				}
+			});
+
+			
+
+
+
+
+		</script>
+	</body>
+</html>

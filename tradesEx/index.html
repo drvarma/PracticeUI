@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Buddy</title>
+		<link href="//netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+		<script  type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+		<script src="https://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-1.2.4.js"></script>
+	</head>
+	<body ng-app='TradeApp' ng-controller="newTradeCtrl">
+	<table width=100% >
+	<thead>
+		
+	<tr>
+	    <th>Group</th>
+	    <th>  </th>
+		<th>txn Id</th>
+		<th>quantity</th>
+		<th>price</th>
+		<th> marketvalue</th>
+	</tr>
+	</thead>
+	<tbody>
+			<tr ng-repeat="trade in trades| filter:{Symbol:'IBM'}">
+         <td> IBM</td>
+	    <td>{{trade.Action}}</td>
+	    <td>{{trade.TxnId}}</td>
+		<td>{{trade.Quantity}}</td>
+		<td>{{trade.Price}}</td>
+		<td>{{trade.MarketValue}}</td>
+	
+	</tr>
+
+	<tr ng-repeat="trade in trades| filter:{Symbol:'XOM'}">
+	    <td>XOM</td>
+	    <td>{{trade.Action}}</td>
+	    <td>{{trade.TxnId}}</td>
+		<td>{{trade.Quantity}}</td>
+		<td>{{trade.Price}}</td>
+		<td>{{trade.MarketValue}}</td>
+	
+	</tr>
+	<tr ng-repeat="trade in trades| filter:{Symbol:'BAC'}">
+	    <td>BAC</td>
+	    <td>{{trade.Action}}</td>
+	    <td>{{trade.TxnId}}</td>
+		<td>{{trade.Quantity}}</td>
+		<td>{{trade.Price}}</td>
+		<td>{{trade.MarketValue}}</td>
+	
+	</tr>
+</table>
+<button type="button" class="btn btn lg">TOTAL P/L</button>
+			 <script type="text/javascript" src="newTradeCtrl.js"></script>
+	</body>
+</html>

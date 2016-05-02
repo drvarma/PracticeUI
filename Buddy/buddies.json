@@ -1,0 +1,31 @@
+[
+
+{
+	"userName": "abc",
+	"firstName":"ram",
+	"lastName":"p",
+	"status":"available",
+	"email":"email1@gmail.com",
+	"dob":"1/1/1111",
+	"bio":"male1"
+},
+{
+	"userName": "def",
+	"firstName":"apple",
+	"lastName":"fruit",
+	"status":"busy",
+	"email":"email2@gmail.com",
+	"dob":"2/2/2222",
+	"bio":"male2"
+},
+{
+	"userName": "ghi",
+	"firstName":"honda",
+	"lastName":"car",
+	"status":"offline",
+	"email":"email3@gmail.com",
+	"dob":"3/3/3333",
+	"bio":"female"
+}
+
+]
